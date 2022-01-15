@@ -1,4 +1,4 @@
-# React 로 검색 폼 개발하기
+# react-lecture-2
 > 리액트를 한파일에서 만드는 방식
 
 Main.js // https://github.com/lhyekwang/coding/blob/react-lecture/react_study/2-react/js/main.js
