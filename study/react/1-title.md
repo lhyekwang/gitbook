@@ -1,5 +1,3 @@
 # 1-title
 
-순수 JS로 검색 사이트 개발
-
-https://github.com/lhyekwang/coding/commit/6726b340231869ff5b9a40014cd510141337f66a
+[https://github.com/lhyekwang/coding/blob/1519550e41b6933cf2ed5512556999811492660c/react\_study/1-vanilla/js/helpers.js#L1-L6](https://github.com/lhyekwang/coding/blob/1519550e41b6933cf2ed5512556999811492660c/react\_study/1-vanilla/js/helpers.js#L1-L6)
