@@ -1,6 +1,6 @@
-# 1-st
+# react-lecture-1
 
-## vanilla JS로 검색 사이트 개발
+> vanilla JS로 검색 사이트 개발
 
 ### 특징
 티끌같은 JS 기반지식으로 볼때 신기했고 생소했던것 위주로 정리
