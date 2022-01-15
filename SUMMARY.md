@@ -7,4 +7,4 @@
 ## STUDY
 
 * [React](study/react/README.md)
-  * [1-title](study/react/1-title.md)
+  * [react-lecture-1](study/react/react-lecture-1.md) 
