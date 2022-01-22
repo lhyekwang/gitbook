@@ -1,10 +1,15 @@
 # react-lecture-3
 
 > react componenet 로 만들기
+> 
 > **클래스이용법**
+> * 파일을 각각분리하고 각각의 class 로 작업한후에 연결해준다. APP.js 에서 제어하므로 전체가 변경되어야 되는 이벤트는 APP.js 에서 관리한다.
 > *   App.js 
->
->     * SearchForm.js < 검색
+>     * SearchForm.js < 검색폼
+>     * Tabs.js < 탭
+>     * List.js < 검색결과
+>     * KeywordList.js < 키워드리스트
+>     * HistoryKeywordList.js < 최근검색어
 
 각 컴포넌트 파일별 특징에 **함수**로 만들지 **클래스**로 만들지 결정해야 한다.
 
