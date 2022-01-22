@@ -9,7 +9,7 @@
 > 상속을 이용해서 각각의 키워드 목록 최근검색어를 만든다.
 
 https://github.com/lhyekwang/coding/blob/e87cffac09c1098a939ec3c02981b4116cdec3f6/react_study/3-component/src/components/List.js
-```
+```javascript
 import React from "react" ;
 
 export default class List extends React.Component{
@@ -42,7 +42,7 @@ export default class List extends React.Component{
 
 ```
 https://github.com/lhyekwang/coding/blob/react-lecture/react_study/3-component/src/components/KeywordList.js
-```
+```javascript
 ...
 export default class KeywordList extends List{
 
@@ -64,7 +64,7 @@ export default class KeywordList extends List{
 }
 ```
 https://github.com/lhyekwang/coding/blob/react-lecture/react_study/3-component/src/components/HistorywordList.js
-```
+```javascript
 export default class HistorywordList extends List{
 
 ```
