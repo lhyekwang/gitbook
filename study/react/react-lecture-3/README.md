@@ -27,7 +27,7 @@ export default SearchForm;
 ```
 https://github.com/lhyekwang/coding/blob/react-lecture/react_study/3-component/src/components/Header.js
 
-```
+```javascript
 const Header = (props) => {
   return(
     <header className='container'>{props.title}</header>
@@ -37,7 +37,7 @@ export default Header;
 ```
 
 https://github.com/lhyekwang/coding/blob/react-lecture/react_study/3-component/src/components/SearchForm.js
-```
+```javascript
 const SearchForm = ({ value, onChange, onSubmit, onReset }) => {
 
   const handleSubmit = (event) => {
@@ -54,7 +54,7 @@ const SearchForm = ({ value, onChange, onSubmit, onReset }) => {
 
 https://github.com/lhyekwang/coding/blob/react-lecture/react\_study/3-component/src/App.js
 
-```
+```javascript
 ...
 import SearchForm from "./components/SearchForm.js"
 ...
