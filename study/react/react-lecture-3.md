@@ -1,10 +1,8 @@
 # react-lecture-3
 
 > react componenet 로 만들기
->
-> *   App.js
->
->
+> **클래스이용법**
+> *   App.js 
 >
 >     * SearchForm.js < 검색
 
