@@ -10,7 +10,7 @@ https://github.com/lhyekwang/coding/commit/a6d778bbbbb4866c68db45b86b8c1f9f60d71
 
 
 https://github.com/lhyekwang/coding/blob/react-lecture/react_study/3-component/src/components/List.js
-```
+```javascript
 import React from "react";
 import { formatRelativeDate } from "../helpers.js";
 
@@ -49,7 +49,7 @@ export default List;
 ```
 
 https://github.com/lhyekwang/coding/blob/react-lecture/react_study/3-component/src/components/KeywordList.js
-```
+```javascript
 import React from "react" ;
 import List from "./List.js"
 import store from "../Store.js"
@@ -82,7 +82,7 @@ export default class KeywordList extends React.Component {
 }
 ```
 https://github.com/lhyekwang/coding/blob/react-lecture/react_study/3-component/src/components/HistorywordList.js
-```
+```javascript
 import React from "react" ;
 import List from "./List.js"
 import store from "../Store.js"
