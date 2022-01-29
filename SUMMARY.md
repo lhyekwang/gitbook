@@ -3,6 +3,7 @@
 ## TIP
 
 * [accessibility](tip/accessibility.md)
+  * [layer](tip/accessibility/layer.md)
 
 ## STUDY
 
