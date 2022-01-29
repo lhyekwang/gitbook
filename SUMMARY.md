@@ -2,8 +2,7 @@
 
 ## TIP
 
-* [HTML](README.md)
-  * [role](tip/readme/role.md)
+* [accessibility](accessibility.md)
 
 ## STUDY
 
