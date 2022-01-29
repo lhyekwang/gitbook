@@ -2,7 +2,7 @@
 
 ## TIP
 
-* [accessibility](accessibility.md)
+* [accessibility](tip/accessibility.md)
 
 ## STUDY
 
