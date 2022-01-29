@@ -9,5 +9,5 @@ role 을 알고 시작 하면 좋다. role 이란 단순 div 나 span 으로 되
 
 ##### 주로사용하는 role
 	- search, tab, 
-  - button, radio,
-  - main, footer, presentation 
+	- button, radio,
+	- main, footer, presentation 
