@@ -4,6 +4,8 @@
 
 https://github.com/landvibe/inflearn-react-project/tree/master/game2048/
 
+<hr/>
+
 lodash 라는 함수형 프로그램을 사용하면 반복적인 작업을 간편하게 해주는 기능이 있긴하다.
 
 ```
@@ -44,7 +46,6 @@ export const MAX_POS = 4;
 상태값을 나타내는 부분은 상태값으로 만들어주는게 좋다.
 
 Game.js.  
-https://github.com/landvibe/inflearn-react-project/blob/f68d7e7aa277b102f5ccf402134a3e57619d069f/game2048/final/src/component/Game.js#L8-L30
 ```
 ...
   const [tileList, setTileList] = useState(getInitialTileList);
@@ -178,7 +179,7 @@ Game.js 에서 필요한건 up, down, left, right 혹을 이용해서 관리
 ```
 useMoveTile({ tileList, setTileList, setScore });
 ```
-useMoveTitle.js
+useMoveTitle.js.  
 ```
 import { useEffect } from 'react';
 import { makeTile, moveTile } from '../util/tile';
@@ -226,7 +227,7 @@ export default function useMoveTile({ tileList, setTileList, setScore }) {
   }, [tileList, setTileList, setScore]);
 }
 ```
-util/ tile.js에서 키만들어서 Game.js 에 넣어주기
+util/ tile.js에서 키만들어서 Game.js 에 넣어주기.  
 ```
 let currentId = 0; // key으로 
 export function makeTile(tileList) {
@@ -244,17 +245,19 @@ export function makeTile(tileList) {
 ```
 
 Game.js
+<pre><Tile key={item.id} {...item} /> // 여기 key 값으로 활용</pre>
+
+key관련된 에러 수정완료.   
 ```
-<Tile key={item.id} {...item} /> // 여기 key 값으로 활용
-```
-key관련된 에러 수정완료.   export const assert = function (condition, message) {
+export const assert = function (condition, message) {
   if (!condition) {
     throw new Error(`Assertion failed: ${message}`);
   }
 };
+```
+<hr/>
 
-<hr>
-util/tile.js
+util/tile.js. 
 ```
 import { assert } from './assert';
 assert(x === 0 || y === 0, ''); //x , y중에 하나는 무조건 0이어야 한다. 
@@ -269,7 +272,8 @@ export const assert = function (condition, message) {
 ```
 프로덕션 빌드를 할때 제거해주면 좋긴하지만, 제거안해도 되긴해요.  
 
-<hr>
+<hr/>
+
 check js를 해서 에러를 줘야 하는건데, game.js 에서 움직일때 title-mergee 라는걸 표현할때 그정보를 가지고있는것이다
 title.js
 ```
@@ -278,13 +282,12 @@ isMerge : undifinded,
 ...
 tile.isMerged = true;
 ```
-에러사라졌어요.
+에러처리   
 <hr>
-useMoveTitle.js.  
-```
-newTile.isNew = true
-```
-Game.js.  렌더링하는부분에서 간단하게 처리하기위에 아래부분을 분리
+useMoveTitle.js    
+<pre>newTile.isNew = true</pre>
+
+Game.js.  렌더링하는부분에서 간단하게 처리하기위에 아래부분을 분리.  
 ```
 ...
 <div
@@ -296,8 +299,7 @@ Game.js.  렌더링하는부분에서 간단하게 처리하기위에 아래부�
 ...
 ```
 Title.js.  
-npm i classnames 
-
+npm i classnames 클래스네임 플로그인사용   
 
 ```
 import React from 'react';
@@ -325,9 +327,10 @@ Game.js.
 </div>
 ...
 ```
-<hr>
-score 표현하기   
-Header.js
+<hr/>
+
+score 표현하기.  
+Header.js. 
 ```
 import React from 'react';
 
@@ -346,7 +349,7 @@ export default function Header({ score, bestScore }) { // 값보냄
   );
 }
 ```
-App.js
+App.js.  
 ```
 import React, { useState, useEffect } from 'react';
 import Header from './component/Header';
@@ -376,8 +379,8 @@ export default function App() {
   );
 }
 ```
-score 를 올려주는 부분은 game 쪽에서 하는게 좋고, game.js move 할때 올려주는게 좋고 title.js isMerged 할때 점수가 올라갈때 준다   
-hook/useMoveTile.js 
+score 를 올려주는 부분은 game 쪽에서 하는게 좋고, game.js move 할때 올려주는게 좋고 title.js isMerged 할때 점수가 올라갈때 준다.         
+hook/useMoveTile.js.   
 ```
 const score = newTileList.reduce(
         (acc, item) => (item.isMerged ? acc + item.value : acc),
@@ -385,11 +388,12 @@ const score = newTileList.reduce(
 );
 setScore(v => v + score);
 ```
-<hr>
-best 넣기   
-로컬스토리지 활용   
-hook 으로 관리
-hook/useLocalStorageNumber.js
+<hr/>
+
+best 넣기.      
+로컬스토리지 활용.      
+hook 으로 관리   
+hook/useLocalStorageNumber.js.  
 ```
 import { useState, useEffect } from 'react';
 
@@ -434,7 +438,7 @@ useEffect(() => { // 기존bestScore 보다 커진순간에 하면 됨.
     }
 });
  
-<hr>
+```
 
 
 
