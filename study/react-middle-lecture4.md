@@ -130,10 +130,15 @@ function Greeting(){
   
 }
 ```
-<hr/>
+* * *
+
+
 #### 자식요소에서 변경하고 싶을때
-하위콤포넌트에서 수정하고 싶을때 데이타 수정하고 싶은 함수를 별도의 함수를 설정.(SetUserContext) 
-```
+ 
+
+SetUserContext 하위콤포넌트에서 수정하고 싶을때 데이타 수정하고 싶은 함수를 별도의 함수를 설정 
+
+```javascript
 const UserContext = createContext({ username : 'unknown , helloCount : 0});
 const SetUserContext = createContext( ()=>{} );
 ...
@@ -146,7 +151,7 @@ const SetUserContext = createContext( ()=>{} );
 
 ```
 child.js.  
-```
+```javascript
 const setUser = userContext (SetUserContext);
 const {username, helloCount } = userContext( UserContext );
 return (
@@ -159,13 +164,13 @@ return (
   </React.Fragment>
 )
 ```
-<hr/>
-##### context 주의사항.  
+* * *
+#### context 주의사항.
 불필요한 렌더링을 줄이는게 좋다. 
 부모로 있는 경우도 같이 렌더링이 되기 때문에 분리해주는게 좋다.  
 count 값이 변경되면서 렌더링이 되는데  Greeting 도 같이 렌더링이 된다. (username 이 만들어지니까, 감싸고 있는 username 때문에.)
 
-```
+```javascript
 const [username, setUsername] = userState('mika');
 const [age, setAge] = userState(0);
 const [count, setCount ] = useState(0);
