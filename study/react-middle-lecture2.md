@@ -47,8 +47,9 @@ function onDelete(e){
 
 **React에서는 UI코드는 선언형으로 작성해두고, 이벤트 헨들러에서는 데이타만 수정하게 되면 리액트가 자동으로 UI가 자동으로 렌더링을 해준다.**
 
-컴포넌트의 속성값가 상태값
+컴포넌트의 속성값과 상태값
 --
+###컴포넌트 상태값
 리액트 컴포넌트에서 UI데이타를 다루는 방법
 ```javascript
 let color = 'red'
@@ -61,8 +62,8 @@ return {
   <button>
 }
 ```
-리액트 컴포넌트에서는 UI데이타를 값이나 속성값이나 상태값으로 관리를 해야 한다. 위의 코드는 그렇게 관리하지 않음.
-외부에 color 라는 값을 backgroundColor에 입력을 했고, 처음에 레드였다가 다음에 블루로 변경되는 코드인데, 위에같은 경우는 리액트가 color가 변경이 되었지만 변경되어있는지 모르는 코드
+>리액트 컴포넌트에서는 UI데이타를 값이나 속성값이나 상태값으로 관리를 해야 한다. 위의 코드는 그렇게 관리하지 않음.
+>외부에 color 라는 값을 backgroundColor에 입력을 했고, 처음에 레드였다가 다음에 블루로 변경되는 코드인데, 위에같은 경우는 리액트가 color가 변경이 되었지만 변경되어있는지 모르는 코드
 ```javascript
 const [ color, setColor ] = useState('red');
 
@@ -75,10 +76,12 @@ return {
   <button>
 }
 ```
-> useState 를 사용 할 때에는 상태의 기본값을 파라미터로 넣어서 호출해줍니다. 이 함수를 호출해주면 배열이 반환되는데요, 여기서 첫번째 원소는 현재 상태, 두번째 원소는 Setter 함수입니다.
-> 비구조화함수를 통해서 각원소를 추출해주고, Setter 함수는 파라미터로 전달 받은 값을 최신 상태로 설정해줍니다.
+>useState 를 사용 할 때에는 상태의 기본값을 파라미터로 넣어서 호출해줍니다. 이 함수를 호출해주면 배열이 반환되는데요, 여기서 첫번째 원소는 현재 상태, 두번째 원소는 Setter 함수입니다.
+>비구조화함수를 통해서 각원소를 추출해주고, Setter 함수는 파라미터로 전달 받은 값을 최신 상태로 설정해줍니다.
 
-Title.js
+###컴포넌트 속성값
+
+Title.js   title 안에 값은 부모로 부터 받은 속성값(props) 이다
 ```javascript
 export default function Title(props){
   return <p>{props.title}</p>
@@ -111,9 +114,9 @@ export default function Counter(){
   )
 }
 ```
-부모컴포넌트(counter)가 렌더링이 될때마다 자식(Title)콤포넌트도 렌더링됨.   
-그러나 onClick2를 불렀을때도 상태값이 변하지 않았는데도 title 컴포넌트는 계속 호출이된다.   
-값이 변경될때만 호출할때는 React.memo를 사용할수있음.   
+>부모컴포넌트(counter)가 렌더링이 될때마다 자식(Title)콤포넌트도 렌더링됨.  
+>그러나 onClick2를 불렀을때도 상태값이 변하지 않았는데도 title 컴포넌트는 계속 호출이된다.   
+>값이 변경될때만 호출할때는 React.memo를 사용할수있음.   
 
 Title.js
 ```javascript 
@@ -123,10 +126,10 @@ function Title({ title }){
 
 export default Reat.memo(Title)
 ```
-각 콤포넌트별로 상태값을 가지는 메모리공간이 있어서 같은 컴포넌트라고 하더라도 자신만의 상태값이 존재한다. 각자 사용된곳에서 각자의 상태값을 유지하고 있음.   
+>각 콤포넌트별로 상태값을 가지는 메모리공간이 있어서 같은 컴포넌트라고 하더라도 자신만의 상태값이 존재한다. 각자 사용된곳에서 각자의 상태값을 유지하고 있음.   
 
-속성값은 불변변수이지만, 상태값은 불변변수가 아니다. 하지만 상태값은 불변변수로 관리하는게 좋음. (불변변수 는 변수의 값을 바꿀 수 없다.)
-속성값의 변경을 시도하려고 하면 에러가 발생한다.
+>속성값은 불변변수이지만, 상태값은 불변변수가 아니다. 하지만 상태값도 불변변수로 관리하는게 좋음. (불변변수 는 변수의 값을 바꿀 수 없는 변수를 말한다다.)
+>속성값의 변경을 시도하려고 하면 아래와 같이 에러가 발생한다.
 
 Title.js
 ```javascript 
@@ -139,7 +142,7 @@ export default Reat.memo(Title)
 ```
 >> 에러
 
-그래서 title을 수정하고 싶으면 title 을 갖은 부모에서
+>그래서 title을 수정하고 싶으면 title 을 갖은 부모컴포넌트에서 관리하는 상태값 변경함수를 이용해야 한다. 상태값도 불변변수로 관리하는게 좋은데, 상태값은 객체형식으로 변경해보자.
 Counter.js
 ```javascript
 export default function Counter(){
@@ -156,24 +159,7 @@ export default function Counter(){
   )
 }
 ```
->> 안된다. React 는 이전값과의 단순비교로 판단을 하는데, count  는 객체인데, 객체 참조값은 변하지 않았기때문에 값이 변경되지 않았다고 판단한다 그래서 setCount 는 무시가 된다.
-Counter.js
-```javascript
-export default function Counter(){
-  const [count, setCount ] = useState({ value : 0 });
-  function onClick(){
-    count.value += 1 ;
-      setCount (count);
-  }
-  return (
-    <div>
-      <Title title={`현재 카운트 : ${count}`} />
-      <button onClick = {onClick}>증가</button>
-    </div>
-  )
-}
-```
->> 상태값도 불변변수로 관리하는게 좋다.
+>**안된다.** React 는 이전값과의 단순비교로 판단을 하는데, count  는 객체인데, 객체 참조값은 변하지 않았기때문에 값이 변경되지 않았다고 판단한다 그래서 setCount 는 무시가 된다.
 
 Counter.js
 ```javascript
@@ -190,7 +176,7 @@ export default function Counter(){
   )
 }
 ```
-count로 불러넣고 변경하고자 하는것을 덮어쓰는 방식이다.
+>**OKcount**로 불러넣고 변경하고자 하는것을 덮어쓰는 방식이다.
 
 컴포넌트의 함수의 반환값
 --
