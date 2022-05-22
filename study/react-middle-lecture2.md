@@ -23,7 +23,7 @@ $ npm install router-react-dom@5
 각 클릭버튼을 사용해서 할일목록 만들기   
 * 기본자바스크립트로 만든것은 DOM API를 사용해서 주로 만들었음.
 
-```
+```javascript
 function onAdd(){
   const todo = {id:currentId, desc};
   setCurrendId(currentId + 1);
@@ -50,7 +50,7 @@ function onDelete(e){
 컴포넌트의 속성값가 상태값
 --
 리액트 컴포넌트에서 UI데이타를 다루는 방법
-```
+```javascript
 let color = 'red'
 function onClick(){
 color = 'blue'
@@ -63,7 +63,7 @@ return {
 ```
 리액트 컴포넌트에서는 UI데이타를 값이나 속성값이나 상태값으로 관리를 해야 한다. 위의 코드는 그렇게 관리하지 않음.
 외부에 color 라는 값을 backgroundColor에 입력을 했고, 처음에 레드였다가 다음에 블루로 변경되는 코드인데, 위에같은 경우는 리액트가 color가 변경이 되었지만 변경되어있는지 모르는 코드
-```
+```javascript
 const [ color, setColor ] = useState('red');
 
 function onClick(){
@@ -79,7 +79,7 @@ return {
 > 비구조화함수를 통해서 각원소를 추출해주고, Setter 함수는 파라미터로 전달 받은 값을 최신 상태로 설정해줍니다.
 
 Title.js
-```
+```javascript
 export default function Title(props){
   return <p>{props.title}</p>
 }
@@ -92,7 +92,7 @@ export default function Title({ title }){
 
 
 Counter.js
-```
+```javascript
 export default function Counter(){
   const [count, setCount ] = useState(0);
   const [count2, setCount2 ] = useState(0);
@@ -116,7 +116,7 @@ export default function Counter(){
 값이 변경될때만 호출할때는 React.memo를 사용할수있음.   
 
 Title.js
-``` 
+```javascript 
 function Title({ title }){
   return <p>{title}</p>
 }
@@ -129,7 +129,7 @@ export default Reat.memo(Title)
 속성값의 변경을 시도하려고 하면 에러가 발생한다.
 
 Title.js
-``` 
+```javascript 
 function Title(props){
   props.title = 'aasef'
   return <p>{prpps.title}</p>
@@ -141,7 +141,7 @@ export default Reat.memo(Title)
 
 그래서 title을 수정하고 싶으면 title 을 갖은 부모에서
 Counter.js
-```
+```javascript
 export default function Counter(){
   const [count, setCount ] = useState({ value : 0 });
   function onClick(){
@@ -158,7 +158,7 @@ export default function Counter(){
 ```
 >> 안된다. React 는 이전값과의 단순비교로 판단을 하는데, count  는 객체인데, 객체 참조값은 변하지 않았기때문에 값이 변경되지 않았다고 판단한다 그래서 setCount 는 무시가 된다.
 Counter.js
-```
+```javascript
 export default function Counter(){
   const [count, setCount ] = useState({ value : 0 });
   function onClick(){
@@ -176,7 +176,7 @@ export default function Counter(){
 >> 상태값도 불변변수로 관리하는게 좋다.
 
 Counter.js
-```
+```javascript
 export default function Counter(){
   const [count, setCount ] = useState({ value1 : 0 ,value2 : 0, value3 : 0 });
   function onClick(){
@@ -225,7 +225,7 @@ component 의 키를 변경하게 되도, ummount와 mount를 하면서 새로 �
 useState 상태값 추가
 useEffect 부수효과 처리
 - 서버 API 호출, 이벤트 핸들러 등록 등
-```
+```javascript
 const [count, setCount ]= useState(0); 
 function onClick(){
   setCount(count + 1);
@@ -245,7 +245,7 @@ count 를 두번증가시키는걸 의도했지만, 하나씩만 추가된다.
 따라서 onClick 를 해도 여기 있는 로그는 한번만 출련된다.
 상태값 변경하면서 배치로 처리하는 이유(동기는 순서대로, 비동기는 여러가지를 같이) 는 리액트 상태값 변경을 동기로 처리하면 하나의 상태값이 변경될때마다 화면을 다시 그리기때문에 성능이슈가 생긴다.
 상태값 변경을 동기로 처리하고 화면을 그리지 않는다면 UI데이타가 다르게 보여지는 혼란이 생길것이다.   
-```
+```javascript
 const [count, setCount ]= useState({ value : 0 }); 
 function onClick(){
   setCount({value : count + 1});
@@ -261,7 +261,7 @@ return (
 ```
 >객체여도 동일함 안된다.
 
-```
+```javascript
 const [count, setCount ]= useState(0); 
 function onClick(){
   setCount(v => v+1);
@@ -279,7 +279,7 @@ return (
 >함수를 입력하면 처리되기 직전의 상태값을 매개변수로 받기 때문에 원하는대로 동작. 
 >onClick 이벤트 핸들러는 리액트내부에서 관리되는 리액트 요소에 입력이 되어 있기때문에 배치로 처리된다. 
 
-```
+```javascript
 const [count, setCount ]= useState(0); 
 function onClick(){
   ReactDOM.unstable_batcheUpdate(() =>
@@ -308,7 +308,7 @@ return (
 한번 렌더링하기 위에 컴포넌트 함수가 여러번 호출 될 수도 있음.
 컴포넌트 내부에서 직접 실행하는 부수 효과가 있다면 한번 렌더링할때 여러번 부수효과가 발생할 수 있다는것이다. 
 
-```
+```javascript
 useEffect ( ()=> {
   document.title = `업데이트 횟수 : ${count}; // 
 })
@@ -322,7 +322,7 @@ return <button onClick ={ ()=> setCount(count +1) }>increase</button>
 
 리액트 훅 기초 익히기2
 --
-```
+```javascript
 const vaule = userId + 10;
 function func1(){
   console.log(userId);
@@ -340,7 +340,7 @@ useEffect( ()=> {
 >매번 넣어야 되는것때문에 문제가 되는경우가 있음
 
 ***부수효과함수가 반환하는 값***
-```
+```javascript
 userEffect(()=>{
   const onResize = () => setWidth(width, innerWidth);
   window.addEventListener('resize', onResize);
@@ -359,7 +359,7 @@ return <div>{`width is ${width}`}</div>
 --
 재사용가능하도록 변경하기
 
-```
+```javascript
 const [user, setUser] = userState(null);
 userEffect(()=>{
   getUserApi(userId).then(data => setUser(data));
@@ -368,7 +368,7 @@ userEffect(()=>{
 ```
 변경후
 useUser.js
-```
+```javascript
 export default function useUser(userId){
   const [user, setUser] = userState(null);
   userEffect(()=>{
@@ -379,13 +379,13 @@ export default function useUser(userId){
 
 ```
 profile.js
-```
+```javascript
 const user = useUser(userId);
 ```
 위와같이 훅은 단순히 함수를 호출하는것만으로도 사용이 가능하다.
 
 useWindowWidth.js
-```
+```javascript
 export default function useWindowWidth(){
   userEffect(()=>{
     const onResize = () => setWidth(width, innerWidth);
@@ -397,12 +397,12 @@ export default function useWindowWidth(){
 return width;
 ```
 WidthPrint.js
-```
+```javascript
 const width = useWindowWidth();
 return <div>{`width is ${width}`}</div>;
 ```
 mount 가 되었는지 안되었는지 확인하는 함수
-```
+```javascript
 export default function useMounted(){
   const [mounted, setMounted] = useState(false);
   useEffect(() =>{
