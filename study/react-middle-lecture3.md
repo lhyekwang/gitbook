@@ -75,7 +75,7 @@ export default function Game({ setScore }) {
     <div className="game-container">
       <div className="grid-container">
         {times(MAX_POS, y => (
-          <div key={y} className="grid-row">
+          <div key={y} className="grid-row"> 
             {times(MAX_POS, x => (
               <div key={y * MAX_POS + x} className="grid-cell"></div>
             ))}
@@ -148,32 +148,293 @@ export function makeTile(tileList) {
 키보드이벤트 핸들러
 --
 keyboard.js      
->외부라이브러리 사용ㅙㅛ
-
-keyboard
+>외부라이브러리 사용. hotkeys-js. npm i hotkeys-js
+>사용법 //hotkey(key,() =>);
 
 ```
 import hotkeys from 'hotkeys-js';
 
-const observerMap = {};
+const observerMap = {}; // obser 관리용, 이곳에 넣음
 export function addKeyCallback(key, callback) { // key 값과 불려질함수
-  if (!observerMap[key]) {
+  if (!observerMap[key]) { // 없으면 초기화
     observerMap[key] = [];
-    hotkeys(key, () => executeCallbacks(key));
+    hotkeys(key, () => executeCallbacks(key)); //등록해주기
   }
   observerMap[key].push(callback);
 }
 export function removeKeyCallback(key, callback) { // 키 지우기
-  observerMap[key] = observerMap[key].filter(item => item !== callback);
+  observerMap[key] = observerMap[key].filter(item => item !== callback); // callback 이 아닌것만 제거
 }
 
 
-function executeCallbacks(key) {
+function executeCallbacks(key) { // 키에 해당되는 callback 모두 실행
   for (const ob of observerMap[key]) {
     ob();
   }
 }
 ```
+
+Game.js 에서 필요한건 up, down, left, right 혹을 이용해서 관리
+```
+useMoveTile({ tileList, setTileList, setScore });
+```
+useMoveTitle.js
+```
+import { useEffect } from 'react';
+import { makeTile, moveTile } from '../util/tile';
+import { addKeyCallback, removeKeyCallback } from '../util/keyboard';
+
+
+export default function useMoveTile({ tileList, setTileList, setScore }) { 
+  useEffect(() => { // 키보드 util 
+    function moveAndAdd({ x, y }) { // 움직이고 추가하는것까지 x,y 를 intiger 로 받아서 오른쪽, 왼쪽, 위, 아래
+      const newTileList = moveTile({ tileList, x, y }); // 움직여서 새로 만들어저 주는것
+      const score = newTileList.reduce( //움직인다음에 추가
+        (acc, item) => (item.isMerged ? acc + item.value : acc),
+        0,
+      );
+      setScore(v => v + score);
+      const newTile = makeTile(newTileList);
+      newTile.isNew = true;
+      newTileList.push(newTile);
+      setTileList(newTileList);
+    }
+
+
+    function moveUp() {
+      moveAndAdd({ x: 0, y: -1 });
+    }
+    function moveDown() {
+      moveAndAdd({ x: 0, y: 1 });
+    }
+    function moveLeft() {
+      moveAndAdd({ x: -1, y: 0 });
+    }
+    function moveRight() {
+      moveAndAdd({ x: 1, y: 0 });
+    }
+    addKeyCallback('up', moveUp);
+    addKeyCallback('down', moveDown);
+    addKeyCallback('left', moveLeft);
+    addKeyCallback('right', moveRight);
+    return () => {
+      removeKeyCallback('up', moveUp);
+      removeKeyCallback('down', moveDown);
+      removeKeyCallback('left', moveLeft);
+      removeKeyCallback('right', moveRight);
+    };
+  }, [tileList, setTileList, setScore]);
+}
+```
+util/ tile.js에서 키만들어서 Game.js 에 넣어주기
+```
+let currentId = 0; // key으로 
+export function makeTile(tileList) {
+  let newTile;
+  while (!newTile || (tileList && checkCollision(tileList, newTile))) {
+    newTile = {
+      id: currentId++, // 아이디값으로 넘기기
+      value: 2,
+      isNew: undefined,
+      isMerged: undefined,
+    };
+  }
+  return newTile;
+}
+```
+
+Game.js
+```
+<Tile key={item.id} {...item} /> // 여기 key 값으로 활용
+```
+key관련된 에러 수정완료.   export const assert = function (condition, message) {
+  if (!condition) {
+    throw new Error(`Assertion failed: ${message}`);
+  }
+};
+
+<hr>
+util/tile.js
+```
+import { assert } from './assert';
+assert(x === 0 || y === 0, ''); //x , y중에 하나는 무조건 0이어야 한다. 
+```
+util/assert.js 
+```
+export const assert = function (condition, message) {
+  if (!condition) {
+    throw new Error(`Assertion failed: ${message}`);
+  }
+};
+```
+프로덕션 빌드를 할때 제거해주면 좋긴하지만, 제거안해도 되긴해요.  
+
+<hr>
+check js를 해서 에러를 줘야 하는건데, game.js 에서 움직일때 title-mergee 라는걸 표현할때 그정보를 가지고있는것이다
+title.js
+```
+isNew : undefinded,
+isMerge : undifinded,
+...
+tile.isMerged = true;
+```
+에러사라졌어요.
+<hr>
+useMoveTitle.js.  
+```
+newTile.isNew = true
+```
+Game.js.  렌더링하는부분에서 간단하게 처리하기위에 아래부분을 분리
+```
+...
+<div
+      key = {item.id}
+      className = {`tile tile-${item.value} tile-position-${item.x}-${item.y}`}
+      >
+      <div className="title-inner">{item.value}</div>
+</div>
+...
+```
+Title.js.  
+npm i classnames 
+
+
+```
+import React from 'react';
+import cn from 'classnames'; // 클래스네임패키지
+
+
+export default function Tile({ x, y, value, isMerged, isNew }) { 
+  return (
+    <div
+      className={cn(`tile tile-${value} tile-position-${x}-${y}`, {
+        'tile-merged': isMerged, // 클래스네임패키기 사용하기
+        'tile-new': isNew, // 클래스네임패키기 사용하기
+      })}
+    >
+      <div className="tile-inner">{value}</div>
+    </div>
+  );
+}
+```
+Game.js.  
+```
+...
+<div className = 'title=container">
+      <Tile key={item.id} {...item} />
+</div>
+...
+```
+<hr>
+score 표현하기   
+Header.js
+```
+import React from 'react';
+
+
+export default function Header({ score, bestScore }) { // 값보냄
+  return (
+    <header className="heading">
+      <h1 className="title">2048</h1>
+      <div className="scores-container">
+        <div className="score-container" style={{ marginRight: 5 }}>
+          {score}
+        </div>
+        <div className="best-container">{bestScore}</div>
+      </div>
+    </header>
+  );
+}
+```
+App.js
+```
+import React, { useState, useEffect } from 'react';
+import Header from './component/Header';
+import AboveGame from './component/AboveGame';
+import Game from './component/Game';
+import useLocalStorageNumber from './hook/useLocalStorageNumber';
+
+
+export default function App() {
+  const [score, setScore] = useState(0);
+  const [bestScore, setBestScore] = useLocalStorageNumber('bestScore', 0);
+
+
+  useEffect(() => {
+    if (score > bestScore) {
+      setBestScore(score);
+    }
+  });
+
+
+  return (
+    <div className="container">
+      <Header score={score} bestScore={bestScore} />
+      <AboveGame />
+      <Game setScore={setScore} /> // 스코어올려주기
+    </div>
+  );
+}
+```
+score 를 올려주는 부분은 game 쪽에서 하는게 좋고, game.js move 할때 올려주는게 좋고 title.js isMerged 할때 점수가 올라갈때 준다   
+hook/useMoveTile.js 
+```
+const score = newTileList.reduce(
+        (acc, item) => (item.isMerged ? acc + item.value : acc),
+        0,
+);
+setScore(v => v + score);
+```
+<hr>
+best 넣기   
+로컬스토리지 활용   
+hook 으로 관리
+hook/useLocalStorageNumber.js
+```
+import { useState, useEffect } from 'react';
+
+
+export default function useLocalStorageNumber(key, initialValue) {
+  const [value, setValue] = useState(initialValue);
+
+
+  useEffect(() => {
+    const valueStr = window.localStorage.getItem(key);
+    if (valueStr) {
+      setValue(Number(valueStr));
+    }
+  }, [key]);
+
+
+  useEffect(() => { // set 하는것
+    const prev = window.localStorage.getItem(key);
+    const next = String(value);
+    if (prev !== next) {
+      window.localStorage.setItem(key, next);
+    }
+  }, [key, value]);
+
+
+  return [value, setValue];
+}
+```
+src/App.js 여기서 관리   
+```
+
+import useLocalStorageNumber from './hook/useLocalStorageNumber';
+...
+
+ const [bestScore, setBestScore] = useLocalStorageNumber('bestScore', 0); 
+ 
+...
+
+useEffect(() => { // 기존bestScore 보다 커진순간에 하면 됨.
+    if (score > bestScore) {
+      setBestScore(score);
+    }
+});
+ 
+<hr>
 
 
 
