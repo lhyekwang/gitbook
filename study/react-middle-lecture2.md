@@ -176,7 +176,7 @@ export default function Counter(){
   )
 }
 ```
->**OKcount**로 불러넣고 변경하고자 하는것을 덮어쓰는 방식이다.
+>**setCount**로 불러넣고 변경하고자 하는것을 덮어쓰는 방식이다.
 
 컴포넌트의 함수의 반환값
 --
