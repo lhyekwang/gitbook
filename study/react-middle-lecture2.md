@@ -56,11 +56,11 @@ let color = 'red'
 function onClick(){
 color = 'blue'
 }
-return {
+return (
   <button style={{ backgroundColor: color }} onClick = {onClick}>
   좋아요
   <button>
-}
+)
 ```
 >리액트 컴포넌트에서는 UI데이타를 값이나 속성값이나 상태값으로 관리를 해야 한다. 위의 코드는 그렇게 관리하지 않음.
 >외부에 color 라는 값을 backgroundColor에 입력을 했고, 처음에 레드였다가 다음에 블루로 변경되는 코드인데, 위에같은 경우는 리액트가 color가 변경이 되었지만 변경되어있는지 모르는 코드
@@ -70,11 +70,11 @@ const [ color, setColor ] = useState('red');
 function onClick(){
   setColor['blue']
 }
-return {
+return (
   <button style={{ backgroundColor: color }} onClick = {onClick}>
   좋아요
   <button>
-}
+)
 ```
 >useState 를 사용 할 때에는 상태의 기본값을 파라미터로 넣어서 호출해줍니다. 이 함수를 호출해주면 배열이 반환되는데요, 여기서 첫번째 원소는 현재 상태, 두번째 원소는 Setter 함수입니다.
 >비구조화함수를 통해서 각원소를 추출해주고, Setter 함수는 파라미터로 전달 받은 값을 최신 상태로 설정해줍니다.
@@ -185,7 +185,7 @@ export default function Counter(){
 3. 숫자, 
 4. div 리액트요소, 
 5. 배열, 배열 요소로반환 (배열로 반환시 key 요소가 없으면 에러), 
-6. fragment(div를 안쓰고 싶을때 , <><> 이렇게 쓰기도 함.), 
+6. fragment(div를 안쓰고 싶을때 , <></> 이렇게 쓰기도 함.), 
 7. null, boolean 값, 
 8. 리액트 portal (root 말고 다른곳에 렌더링이가능 / ReactDom 에 있음 (모달만들때 사용) 
   ```
