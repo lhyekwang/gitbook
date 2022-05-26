@@ -554,7 +554,7 @@ export default function App(){
 ```
 두번째 버튼을 클릭해도 'runExpaensiveJob is called '가 찍히지 않는다.   
 
-####useCallback
+#### useCallback
 useMemo와 비슷한데, 메모제이션 기능을 가지고 있는데 함수 메모이제이션에 특화된 함수로 생각하면 된다.
 memo를 사용하는데도 출력이 된다.
 ```javascript
