@@ -580,10 +580,11 @@ const onSave = useCallback( () => saveToServer (name, age), [name, age] );
 />
 ```
 #### userReducer
-여러개의 상태값을 관리할때 사용.
-useState 랑 비슷함.  반환되는 값은 상태값(state)이 반환되고, useState 처럼 상태값을 변경할 수 있는 dispatch 함수가 반환된다.
-매개변수로 reducer 라는 함수를 입력하고, 초기값(INITIAL_STATE)을 입력한다. 
+여러개의 상태값을 관리할때 사용.   
+useState 랑 비슷함.  반환되는 값은 상태값(state)이 반환되고, useState 처럼 상태값을 변경할 수 있는 dispatch 함수가 반환된다.   
+매개변수로 reducer 라는 함수를 입력하고, 초기값(INITIAL_STATE)을 입력한다.    
 하단의 reducer 함수는 현재 상태값과, action 이 입력이 되고, action을 보고 상태값을 어떻게 변경할지 판단한다.   
+reducer 는 현재 상태와 액션 객체를 파라미터로 받아와서 새로운 상태를 반환해주는 함수이다. 
 
 ```javascript
 export default function App(){
