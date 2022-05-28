@@ -581,7 +581,52 @@ const onSave = useCallback( () => saveToServer (name, age), [name, age] );
 ```
 #### userReducer
 여러개의 상태값을 관리할때 사용.   
-useState 랑 비슷함.  반환되는 값은 상태값(state)이 반환되고, useState 처럼 상태값을 변경할 수 있는 dispatch 함수가 반환된다.   
+useState 랑 비슷함.   
+```javascript
+const [state, dispatch] = useReducer(reducer, initialState);
+```
+state : 앞으로 컴포넌트애서 사용할 수 있는상태   
+dispatch :  액션을 발생시키는 함수   
+useReducer [ reducer 함수, 초기상태 ]   
+userRecuder 을 쓰는 예시  (https://react.vlpt.us/basic/20-useReducer.html)
+```javascript
+import React, { useReducer } from 'react';
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'INCREMENT':
+      return state + 1;
+    case 'DECREMENT':
+      return state - 1;
+    default:
+      return state;
+  }
+}
+
+function Counter() {
+  const [number, dispatch] = useReducer(reducer, 0);
+
+  const onIncrease = () => {
+    dispatch({ type: 'INCREMENT' });
+  };
+
+  const onDecrease = () => {
+    dispatch({ type: 'DECREMENT' });
+  };
+
+  return (
+    <div>
+      <h1>{number}</h1>
+      <button onClick={onIncrease}>+1</button>
+      <button onClick={onDecrease}>-1</button>
+    </div>
+  );
+}
+
+export default Counter;
+```
+
+반환되는 값은 상태값(state)이 반환되고, useState 처럼 상태값을 변경할 수 있는 dispatch 함수가 반환된다.   
 매개변수로 reducer 라는 함수를 입력하고, 초기값(INITIAL_STATE)을 입력한다.    
 하단의 reducer 함수는 현재 상태값과, action 이 입력이 되고, action을 보고 상태값을 어떻게 변경할지 판단한다.   
 reducer 는 현재 상태와 액션 객체를 파라미터로 받아와서 새로운 상태를 반환해주는 함수이다. 
