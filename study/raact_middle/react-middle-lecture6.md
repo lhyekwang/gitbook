@@ -68,7 +68,7 @@ function  removeAllTodo({ id}) {
 ```
 >type 은 action creator 에서도 사용하기도 하지만 리듀서에서도 나중에 사용할것이기 때문에 상수 변수로 만드는게 좋다.
 #### 미들웨어
->미들웨는 함수이다.  함수를 연달아서 두번 리턴하는 함수임.
+>미들웨어는 함수이다.  함수를 연달아서 두번 리턴하는 함수임.
 ```javascript
   const myMiddleware = store => next => action => next(action);
   //function 키워드로 보기
