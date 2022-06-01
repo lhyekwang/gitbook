@@ -11,7 +11,7 @@ MyComponent.proTypes = {
 2. 함수의 이름 부여   
 2-1. 컴포넌트의 매개변수는 명명된 매개변수 문법으로 작성할것
 ```javascript
-esport default function MyComponent({ prop1, prop2 }){
+export default function MyComponent({ prop1, prop2 }){
   //...
 }
 ```
