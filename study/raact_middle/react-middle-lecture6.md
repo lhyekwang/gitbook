@@ -857,7 +857,7 @@ FriendMain.js
       yield put (actions.setLoading(false));
   }
    // put, call all 는 모두 saga 에서 부수효과 라고 부름
-   // safa 에서가져온다.
+   // saga 에서가져온다.
    // api 를 흉내내는 callApiLike를 하나 만들었음
    // put 리덕스 액션 발생, likecount 를 1을 증가
    // call 은 뒤에있는 함수 실행 
