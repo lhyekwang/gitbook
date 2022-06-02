@@ -523,7 +523,7 @@ useSelector 훅은 리덕스에서 액션이 처리가 되면, 여기서 반환�
 
   // 하지만 배열방식과 객체방식은  값이 변경되지 않아도, 리덕스에서 액션이 처리될 때마다 불필요하게 렌더링이 된다는 단점이 있다.   그래서 두번째 변수  shallowEqual 를 사용해서 렌더링을 할지 말지 결정하는 것이다. 
 
-  import { userSelector, shallowEqual } from 'react-redux';
+  import { useSelector, shallowEqual } from 'react-redux';
  
  //배열일경우 
  const [ friends , freinds2, friend3 ] = useSelector ( 
@@ -544,10 +544,10 @@ const { friends , freinds2, friend3 }= useSelector (
 매번 shallowEqual 를 써주는게 번거롭기 때문에 커스텀 훅을 만들어서 사용하면 좋다.   
 ```javascript
 
-import { userSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 
 function useMySelecor(selector){
-  return userSelector (selector, shallowEqual);
+  return useSelector (selector, shallowEqual);
 } // 커스텀훅을 사용해서  뒤에 shallowEqual 를 써준다.
 
 function MyComponent(){
@@ -559,7 +559,7 @@ function MyComponent(){
 useDispatch  사용법   
 
 ```javascript
-  import { userSelector, shallowEqual } from 'react-redux';
+  import { useSelector, shallowEqual } from 'react-redux';
 
   import default function FriendMain(){
   
@@ -570,7 +570,7 @@ useDispatch  사용법
   }
 
   // useDispatch 를 사용해서 store 에서 가져오지 않아도 된다. 
-  import { userSelector, shallowEqual , useDispatch } from 'react-redux';
+  import { useSelector, shallowEqual , useDispatch } from 'react-redux';
 
   import default function FriendMain(){
     const dispatch = useDispatch();
